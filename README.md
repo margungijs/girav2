@@ -98,5 +98,3 @@ In your root laravel directory run composer install
 ## And finally set up the docker containers 
 
 Running ./vendor/bin/sail up -d should run all the docker containers and images required for the laravel and opening localhost in your browser should open the laravel project
-
-### If you have any questions let me know
