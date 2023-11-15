@@ -22,3 +22,7 @@ Route::get('/', function () {
 Route::get('/test', [UserController::class, 'Test']);
 
 Route::get('/api', [APIController::class, 'getData']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

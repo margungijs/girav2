@@ -4,17 +4,32 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Nette\Schema\ValidationException;
 
 class UserController extends Controller
 {
-    public function Test()
+    public function createUser(Request $request)
     {
-        $user = new User;
-        $user->name = 'test';
-        $user->email = 'test@example.com';
-        $user->password = bcrypt('test');
-        $user->save();
+        try {
+            $data = $request->validate([
+                'name' => 'required|string|max:50|min:3|unique:users',
+                'email' => 'required|email|unique:users|max:62',
+                'password' => 'required|string|min:8'
+            ]);
 
-        return 'Test worked!';
+            User::create($data);
+
+            return response()->json(['message' => 'Registration successful'], 201);
+        } catch (\Exception $e) {
+            $errors = $e->validator->getMessageBag();
+
+            $detailedErrors = [];
+
+            foreach ($errors->getMessages() as $field => $messages) {
+                $detailedErrors[] = ['field' => $field, 'message' => $messages[0]];
+            }
+
+            return response()->json(['error' => 'Validation failed', 'messages' => $detailedErrors], 422);
+        }
     }
 }
