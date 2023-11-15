@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\APIController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +17,9 @@ use App\Http\Controllers\APIController;
 |
 */
 
+Route::post('/login', [AuthController::class, 'login']);
+
+Route::post('/create-user', [UserController::class, 'createUser']);
 
 Route::post('/receive-data', [APIController::class, 'Data']);
 

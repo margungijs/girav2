@@ -22,4 +22,3 @@ Route::get('/', function () {
 Route::get('/test', [UserController::class, 'Test']);
 
 Route::get('/api', [APIController::class, 'getData']);
-
