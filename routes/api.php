@@ -35,3 +35,14 @@ Route::get('/fetch-data', [GetTasksController::class, 'fetchData']);
 use App\Http\Controllers\UpdateCertainTaskController;
 //Update tasks
 Route::put('/tasks/{id}', [UpdateCertainTaskController::class, 'update'])->name('tasks.update');
+
+use App\Http\Controllers\GetProjectsController;
+//Get projects
+Route::get('/fetch-projects', [GetProjectsController::class, 'fetchProjects']);
+
+
+use App\Http\Controllers\ProjectCalendarController;
+
+// Example route in web.php
+Route::get('/CertainProjectCalendar-{projectId}', [ProjectCalendarController::class, 'show']);
+
