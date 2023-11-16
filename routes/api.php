@@ -20,6 +20,8 @@ Route::delete('/tasks/delete/{id}', [TaskController::class, 'destroy']);
 
 Route::get('/projects/{teamId}', [ProjectController::class, 'index']);
 Route::get('/projects/id/{projectId}', [ProjectController::class, 'show']);
+Route::post('/projects/create', [ProjectController::class, 'store']);
+
 
 
 

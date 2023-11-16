@@ -23,5 +23,24 @@ class ProjectController extends Controller
 
         return response()->json(['project' => $project]);
     }
+    public function store(Request $request)
+    {
+        $request->validate([
+            'projectName' => 'required|string|max:255',
+            'description' => 'required|string',
+            'creator' => 'required|string|max:255',
+            'team_id' => 'required|integer',
+        ]);
+
+        $project = Project::create([
+            'projectName' => $request->input('projectName'),
+            'description' => $request->input('description'),
+            'creationDate' => now(),
+            'creator' => $request->input('creator'),
+            'team_id' => $request->input('team_id'),
+        ]);
+
+        return response()->json(['message' => 'Project created successfully', 'project' => $project], 201);
+    }
 
 }
