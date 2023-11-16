@@ -22,20 +22,29 @@ class TaskController extends Controller
             'status' => 'required|in:To Do,In Progress,Done',
         ]);
         $newStatus = $request->status;
-//
+
         $task = Task::find($id);
-//
+
         if (!$task) {
             return response()->json(['error' => 'Task not found'], 404);
         }
 
-//        dd($task);
         $task->status = $newStatus;
         $task->save();
 
-//
         return response()->json(['message' => 'Task status updated successfully', 'updatedTask' => $task]);
 
-//        return $request;
+    }
+    public function destroy($id)
+    {
+        $task = Task::find($id);
+
+        if (!$task) {
+            return response()->json(['error' => 'Task not found'], 404);
+        }
+
+        $task->delete();
+
+        return response()->json(['message' => 'Task deleted successfully']);
     }
 }
