@@ -33,11 +33,12 @@ class AuthController extends Controller
         if (Auth::attempt($credentials, $request->has('remember'))) {
             $user = Auth::user();
 
-            $tokenValue = Str::random(60);
+            $expirationTimeInMinutes = 60;
+            $token = $user->createToken('authToken', ['*'], null, 3600)->accessToken;
+            $token->expires_at = now()->addMinutes($expirationTimeInMinutes);
+            $token->save();
 
-            $token = $user->createToken($tokenValue)->accessToken;
-
-            return response()->json(['token' => $token, 'custom_token' => $tokenValue], 200);
+            return response()->json(['token' => $token->token, 'expire' => $token->expires_at], 200);
         }
 
         return response()->json(['password' => 'Password incorrect'], 401);

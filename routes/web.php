@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\APIController;
+use App\Http\Controllers\GoogleController;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PasswordReset;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +25,13 @@ Route::get('/', function () {
 Route::get('/test', [UserController::class, 'Test']);
 
 Route::get('/api', [APIController::class, 'getData']);
+
+
+Route::get('/test-mail', function () {
+    $recipient = 'caupupsik@gmail.com';
+    $mail = new PasswordReset();
+
+    Mail::to($recipient)->send($mail);
+
+    return "Test email sent successfully!";
+});
