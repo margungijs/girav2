@@ -7,6 +7,9 @@ use App\Http\Controllers\TaskController;
 
 use App\Http\Controllers\ProjectController;
 
+use App\Http\Controllers\MemberController;
+use App\Http\Controllers\TeamController;
+
 
 Route::post('/receive-data', [APIController::class, 'Data']);
 
@@ -21,6 +24,10 @@ Route::delete('/tasks/delete/{id}', [TaskController::class, 'destroy']);
 Route::get('/projects/{teamId}', [ProjectController::class, 'index']);
 Route::get('/projects/id/{projectId}', [ProjectController::class, 'show']);
 Route::post('/projects/create', [ProjectController::class, 'store']);
+
+Route::get('/members/{userId}', [MemberController::class, 'getMembersByUserId']);
+Route::get('/teams', [TeamController::class, 'getAllTeams']);
+
 
 
 

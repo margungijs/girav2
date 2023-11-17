@@ -17,8 +17,6 @@ class CreateProjectsTable extends Migration
             $table->string('creator');
             $table->timestamps();
 
-            // Add foreign key constraint for team_id
-            $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade');
         });
     }
 
