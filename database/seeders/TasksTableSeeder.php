@@ -16,12 +16,12 @@ class TasksTableSeeder extends Seeder
 
             for ($i = 1; $i <= $taskCount; $i++) {
                 DB::table('tasks')->insert([
-                    'project_id' => $projectId,
+                    'projectId' => $projectId,
                     'title' => "Task $i",
                     'description' => "Description for Task $i.",
                     'dueDate' => now()->addDays(rand(1, 30))->toDateString(), // Random due date within the next 30 days
                     'role' => 'programmer', // You can modify this based on your requirements
-                    'user_id' => rand(1, 10), // Assuming you have 10 user_id's
+                    'userId' => rand(1, 10), // Assuming you have 10 user_id's
                     'status' => $this->getRandomStatus(),
                 ]);
             }

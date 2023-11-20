@@ -11,7 +11,7 @@ class TaskController extends Controller
     {
         // Assuming you have a relationship between tasks and projects
         // and 'project_id' is the foreign key in the tasks table
-        $tasks = Task::where('project_id', $projectId)->get();
+        $tasks = Task::where('projectId', $projectId)->get();
 
         return response()->json(['tasks' => $tasks]);
     }

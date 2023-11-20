@@ -9,13 +9,14 @@ class CreateTasksTable extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('project_id');
+            $table->unsignedBigInteger('projectId');
             $table->string('title');
             $table->text('description');
             $table->date('dueDate');
             $table->string('role');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('userId');
             $table->string('status');
+            $table->unsignedInteger('priority')->default(0);
             $table->timestamps();
         });
     }
