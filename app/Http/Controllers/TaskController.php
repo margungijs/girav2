@@ -13,25 +13,50 @@ use Illuminate\Validation\ValidationException;
 
 class TaskController extends Controller
 {
+
+    public function index($projectId)
+    {
+        // Assuming you have a relationship between tasks and projects
+        // and 'project_id' is the foreign key in the tasks table
+        $tasks = Task::where('projectId', $projectId)->get();
+
+        return response()->json(['tasks' => $tasks]);
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:To Do,In Progress,Done',
+        ]);
+        $newStatus = $request->status;
+
+        $task = Task::find($id);
+
+        if (!$task) {
+            return response()->json(['error' => 'Task not found'], 404);
+        }
+
+        $task->status = $newStatus;
+        $task->save();
+
+        return response()->json(['message' => 'Task status updated successfully', 'updatedTask' => $task]);
+
+    }
+    public function destroy($id)
+    {
+        $task = Task::find($id);
+
+        if (!$task) {
+            return response()->json(['error' => 'Task not found'], 404);
+        }
+
+        $task->delete();
+
+        return response()->json(['message' => 'Task deleted successfully']);
+    }
+  
     public function createTask(Request $request)
     {
-//        $task = new Task([
-//            'title' => 'Sample Task',
-//            'description' => 'This is a sample task',
-//            'dueDate' => '2023-12-01',
-//            'status' => 'pending',
-//            'priority' => 1,
-//            'userID' => 1,
-//            'projectID' => 1,
-//        ]);
-//
-//        if ($task->save()) {
-//            return 'Sample task created successfully!';
-//        } else {
-//            return 'Error creating sample task!';
-//        }
-
-
         try{
             $token = $request->bearerToken();
 
@@ -68,6 +93,4 @@ class TaskController extends Controller
 
             return response()->json(['error' => 'Validation failed', 'messages' => $detailedErrors], 422);
         }
-
-    }
 }
