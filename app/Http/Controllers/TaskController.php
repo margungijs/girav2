@@ -7,22 +7,44 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    public function createSampleTask()
+    public function index($projectId)
     {
-        $task = new Task([
-            'title' => 'Sample Task',
-            'description' => 'This is a sample task',
-            'dueDate' => '2023-12-01',
-            'status' => 'pending',
-            'priority' => 1,
-            'userID' => 1,
-            'projectID' => 1,
-        ]);
+        // Assuming you have a relationship between tasks and projects
+        // and 'project_id' is the foreign key in the tasks table
+        $tasks = Task::where('projectId', $projectId)->get();
 
-        if ($task->save()) {
-            return 'Sample task created successfully!';
-        } else {
-            return 'Error creating sample task!';
+        return response()->json(['tasks' => $tasks]);
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:To Do,In Progress,Done',
+        ]);
+        $newStatus = $request->status;
+
+        $task = Task::find($id);
+
+        if (!$task) {
+            return response()->json(['error' => 'Task not found'], 404);
         }
+
+        $task->status = $newStatus;
+        $task->save();
+
+        return response()->json(['message' => 'Task status updated successfully', 'updatedTask' => $task]);
+
+    }
+    public function destroy($id)
+    {
+        $task = Task::find($id);
+
+        if (!$task) {
+            return response()->json(['error' => 'Task not found'], 404);
+        }
+
+        $task->delete();
+
+        return response()->json(['message' => 'Task deleted successfully']);
     }
 }
