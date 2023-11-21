@@ -8,14 +8,16 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('projects', function (Blueprint $table) {
+        Schema::create('user_image', function (Blueprint $table) {
             $table->id();
-            $table->string("projectTitle");
+            $table->unsignedBigInteger('user_id');
+            $table->string('profile_image')->nullable();
+            $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('projects');
+        Schema::dropIfExists('user_image');
     }
 };

@@ -93,4 +93,5 @@ class TaskController extends Controller
 
             return response()->json(['error' => 'Validation failed', 'messages' => $detailedErrors], 422);
         }
+    }
 }

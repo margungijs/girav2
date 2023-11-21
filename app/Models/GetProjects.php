@@ -9,6 +9,11 @@ class GetProjects extends Model
 
     protected $fillable = [
         'id',
-        'projectTitle',
+        'projectName',
     ];
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class, 'projectId', 'id');
+    }
 }
