@@ -18,6 +18,12 @@ use App\Http\Controllers\TeamController;
 
 Route::post('/update-password', [UpdatePasswordController::class, 'updatePassword']);
 
+Route::get('/token-login', [AuthController::class, 'tokenLogin']);
+
+Route::post('/googleLogin', [GoogleController::class, 'loginOrRegister']);
+
+Route::post('/update-password', [UpdatePasswordController::class, 'updatePassword']);
+
 Route::post('/googleLogin', [GoogleController::class, 'loginOrRegister']);
 
 Route::post('/login', [AuthController::class, 'login']);

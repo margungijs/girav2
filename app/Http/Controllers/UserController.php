@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Nette\Schema\ValidationException;
+use App\Models\UserImage;
 
 class UserController extends Controller
 {
@@ -17,7 +18,14 @@ class UserController extends Controller
                 'password' => 'required|string|min:8'
             ]);
 
-            User::create($data);
+            $user = User::create($data);
+
+
+
+            $userImage = UserImage::create([
+                'user_id' => $user->id,
+                'profile_image' => 'default_image.jpg'
+            ]);
 
             return response()->json(['message' => 'Registration successful'], 201);
         } catch (\Exception $e) {
