@@ -30,7 +30,7 @@ class TasksTableSeeder extends Seeder
 
     private function getRandomStatus(): string
     {
-        $statuses = ['To Do', 'In Progress', 'Done'];
+        $statuses = ['To Do', 'In Progress', 'Stuck', 'Done'];
 
         return $statuses[array_rand($statuses)];
     }
