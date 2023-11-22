@@ -72,6 +72,7 @@ class TaskController extends Controller
                 'title' => 'required|string|max:50',
                 'description' => 'required|string|max:255',
                 'dueDate' => 'required|date',
+                'role' => 'required|string',
                 'status' => 'required|int',
                 'projectID' => 'required|int|min:1',
                 'priority' => 'required|int|min:1'
