@@ -6,15 +6,21 @@ use App\Http\Controllers\APIController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\TaskController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\UpdatePasswordController;
+use App\Http\Controllers\ImageController;
 
 use App\Http\Controllers\ProjectController;
 
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\TeamController;
+
+Route::post('/update-password', [UpdatePasswordController::class, 'updatePassword']);
+
+Route::get('/token-login', [AuthController::class, 'tokenLogin']);
+
+Route::post('/googleLogin', [GoogleController::class, 'loginOrRegister']);
 
 Route::post('/update-password', [UpdatePasswordController::class, 'updatePassword']);
 
@@ -33,6 +39,8 @@ Route::post('/forgot-password', [ForgotPasswordController::class, 'checkEmail'])
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/update-image', [ImageController::class, 'setImage']);
 
 Route::get('/tasks/project/{projectId}', [TaskController::class, 'index']);
 Route::post('/tasks/update-status/{id}', [TaskController::class, 'updateStatus']);

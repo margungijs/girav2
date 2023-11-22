@@ -24,13 +24,11 @@ class GoogleController extends Controller
         $user = User::where('email', $request->input('email'))->first();
 
         if ($user) {
-            // User found, attempt to log in
             Auth::login($user);
 
             $expirationTimeInMinutes = 60;
             $token = $user->createToken('authToken', ['*'], null, $expirationTimeInMinutes)->accessToken;
 
-            // You may want to return a response or redirect here
             return response()->json(['message' => 'User logged in successfully', 'token' => $token->token]);
         } else {
             $password = $this->generateRandomPassword();

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Sanctum\PersonalAccessToken;
 
 
 class AuthController extends Controller
@@ -42,5 +43,21 @@ class AuthController extends Controller
         }
 
         return response()->json(['password' => 'Password incorrect'], 401);
+    }
+
+    public function tokenLogin(Request $request){
+        $token = $request->bearerToken();
+
+        if(!$token){
+            return response()->json(['error' => 'Invalid token'], 422);
+        }
+
+        $accessToken = PersonalAccessToken::where('token', $token)->first();
+
+        if(!$accessToken){
+            return response()->json(['error' => 'Invalid token'], 422);
+        }else{
+            return response()->json(['message' => 'Login successful', 'token' => $token]);
+        }
     }
 }

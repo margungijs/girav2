@@ -54,13 +54,13 @@ class TaskController extends Controller
 
         return response()->json(['message' => 'Task deleted successfully']);
     }
-  
+
     public function createTask(Request $request)
     {
-        try{
+        try {
             $token = $request->bearerToken();
 
-            if(!$token){
+            if (!$token) {
                 return response()->json(['error' => 'Invalid token'], 422);
             }
 
@@ -72,6 +72,7 @@ class TaskController extends Controller
                 'title' => 'required|string|max:50',
                 'description' => 'required|string|max:255',
                 'dueDate' => 'required|date',
+                'role' => 'required|string',
                 'status' => 'required|int',
                 'projectID' => 'required|int|min:1',
                 'priority' => 'required|int|min:1'
@@ -82,7 +83,7 @@ class TaskController extends Controller
             Task::create($data);
 
             return response()->json(['message' => 'Task created!'], 201);
-        }catch (ValidationException $e) {
+        } catch (ValidationException $e) {
             $errors = $e->validator->getMessageBag()->getMessages();
 
             $detailedErrors = [];
@@ -93,4 +94,5 @@ class TaskController extends Controller
 
             return response()->json(['error' => 'Validation failed', 'messages' => $detailedErrors], 422);
         }
+    }
 }
