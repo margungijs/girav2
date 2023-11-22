@@ -17,7 +17,7 @@ class UpdateCertainTaskController extends Controller
         $request->validate([
             'description' => 'required|max:100',
             'dueDate' => 'required|date',
-            'status' => 'required|in:0,1,2,3',
+            'status' => 'required|string',
             'priority' => 'required|integer|between:1,5',
         ]);
 
