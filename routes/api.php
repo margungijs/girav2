@@ -56,8 +56,6 @@ Route::get('/teams', [TeamController::class, 'getAllTeams']);
 
 // routes/web.php or routes/api.php
 
-//Attempt to insert data
-Route::get('/create-sample-task', [TaskController::class, 'createSampleTask']);
 
 use App\Http\Controllers\GetTasksController;
 //Get tasks
@@ -71,10 +69,14 @@ use App\Http\Controllers\GetProjectsController;
 //Get projects
 Route::get('/fetch-projects', [GetProjectsController::class, 'fetchProjects']);
 
+use App\Http\Controllers\GetCertainUserController;
+//Get certain user info
+Route::get('/fetch-user', [GetCertainUserController::class, 'getCertainUser']);
 
 use App\Http\Controllers\ProjectCalendarController;
-
-// Example route in web.php
+// get project relevant tasks
 Route::get('/CertainProjectCalendar-{projectId}', [ProjectCalendarController::class, 'show']);
 
-
+use App\Http\Controllers\GetUserImages;
+// get all images
+Route::get('/get-user-images', [GetUserImages::class, 'GetUserImages']);

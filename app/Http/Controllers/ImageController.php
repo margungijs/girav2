@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Models\UserImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\PersonalAccessToken;
@@ -38,6 +40,23 @@ class ImageController extends Controller
 
         $image->storeAs('public', $imageName);
 
-        return response()->json(['message' => 'Image uploaded successfully']);
+        $userImage = UserImage::where('user_id', $user)->first();
+
+        if ($userImage) {
+            $previousImage = $userImage->profile_image;
+        
+            if ($previousImage) {
+                $imagePath = storage_path('app/public/' . $previousImage);
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
+        
+            $userImage->update(['profile_image' => $imageName]);
+        } else {
+            UserImage::create(['user_id' => $user, 'profile_image' => $imageName]);
+        }
+
+        return response()->json(['response' => asset('storage/' . $imageName)]);
     }
 }
