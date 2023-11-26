@@ -56,8 +56,12 @@ class AuthController extends Controller
 
         if(!$accessToken){
             return response()->json(['error' => 'Invalid token'], 422);
-        }else{
-            return response()->json(['message' => 'Login successful', 'token' => $token]);
         }
+
+        if ($accessToken->expires_at && now()->gt($accessToken->expires_at)) {
+            return response()->json(['error' => 'Token has expired'], 422);
+        }
+
+        return response()->json(['message' => 'Login successful', 'token' => $token]);
     }
 }
