@@ -20,13 +20,6 @@ class UserController extends Controller
 
             $user = User::create($data);
 
-
-
-            $userImage = UserImage::create([
-                'user_id' => $user->id,
-                'profile_image' => 'default_image.jpg'
-            ]);
-
             return response()->json(['message' => 'Registration successful'], 201);
         } catch (\Exception $e) {
             $errors = $e->validator->getMessageBag();
