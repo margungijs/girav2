@@ -13,4 +13,20 @@ class TeamController extends Controller
 
         return response()->json(['teams' => $teams]);
     }
+    public function store(Request $request)
+    {
+        $request->validate([
+            'teamName' => 'required|string|max:255',
+        ]);
+
+        $team = Team::create([
+            'team_name' => $request->input('teamName'),
+        ]);
+
+        return response()->json([
+            'message' => 'Team created successfully',
+            'team' => $team,
+            'team_id' => $team->id,
+        ], 201);
+    }
 }
