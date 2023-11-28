@@ -51,7 +51,10 @@ Route::get('/projects/id/{projectId}', [ProjectController::class, 'show']);
 Route::post('/projects/create', [ProjectController::class, 'store']);
 
 Route::get('/members/{userId}', [MemberController::class, 'getMembersByUserId']);
+Route::get('/user-names', [MemberController::class, 'getUsers']);
+
 Route::get('/teams', [TeamController::class, 'getAllTeams']);
+Route::post('/teams/create', [TeamController::class, 'store']);
 
 
 // routes/web.php or routes/api.php

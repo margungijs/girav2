@@ -11,7 +11,7 @@ class ProjectController extends Controller
     {
         $projects = Project::byTeam($teamId)->get();
 
-        return response()->json(['projects' => $projects]);
+        return response()->json(['projects' => $projects], 200, [], JSON_PRETTY_PRINT);
     }
     public function show($projectId)
     {
